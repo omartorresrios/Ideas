@@ -19,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24A857952AA6C30D006CFE40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24B87EB22AA18E9C00D18405 /* Ideas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ideas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B87EB52AA18E9C00D18405 /* IdeasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeasApp.swift; sourceTree = "<group>"; };
 		24B87EB72AA18E9C00D18405 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 		24B87EB42AA18E9C00D18405 /* Ideas */ = {
 			isa = PBXGroup;
 			children = (
+				24A857952AA6C30D006CFE40 /* Info.plist */,
 				24B87EB52AA18E9C00D18405 /* IdeasApp.swift */,
 				24B87EB72AA18E9C00D18405 /* NewNoteView.swift */,
 				24B87EB92AA18E9D00D18405 /* Assets.xcassets */,
@@ -289,6 +291,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Ideas/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -329,6 +332,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Ideas/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
