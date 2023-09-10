@@ -11,6 +11,7 @@ struct Note: Identifiable {
 	let id: Int
 	var title: String
 	var body: String
+	var topics: [Topic]
 }
 
 struct NewNote {
@@ -42,9 +43,8 @@ struct MyNotesView: View {
 			ForEach($viewModel.notes) { $note in
 				ZStack(alignment: .leading) {
 					NavigationLink {
-						NewNoteView(titleText: $note.title, bodyText: $note.body)
+						NoteView(note: $note)
 							.toolbarRole(.editor)
-						
 					} label: {
 						EmptyView()
 					}
@@ -66,7 +66,7 @@ struct MyNotesView: View {
 	
 	var newNote: some View {
 		NavigationLink {
-			NewNoteView(titleText: .constant(""), bodyText: .constant(""))
+			NoteView(note: .constant(Note(id: 0, title: "", body: "", topics: [])))
 				.toolbarRole(.editor)
 		} label: {
 			Image(systemName: "square.and.pencil")

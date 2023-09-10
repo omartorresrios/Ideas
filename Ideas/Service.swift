@@ -38,20 +38,25 @@ final class Service {
 								   "max_tokens": maxTokens]
 		let jsonData = try? JSONSerialization.data(withJSONObject: json)
 		
-//		guard let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
-//			  let plistDict = NSDictionary(contentsOfFile: plistPath),
-//			  let openAIKey = plistDict.object(forKey: "openaiapikey") as? String else { throw Error.plistFailed }
-		
 		guard let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
-			  let plistDict = NSDictionary(contentsOfFile: plistPath) else { throw Error.plistFailed }
+			  let plistDict = NSDictionary(contentsOfFile: plistPath),
+			  let openAIKey = plistDict.object(forKey: "OpenAIKey") as? String else { throw Error.plistFailed }
 		
-		let request = completionsUrlRequest(url: url, openAIKey: "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", jsonData: jsonData)
+		let request = completionsUrlRequest(url: url, openAIKey: openAIKey, jsonData: jsonData)
+//
+//		do {
+			let (data, _) = try await URLSession.shared.data(for: request)
+	//		guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw Error.invalidData }
+			let decoder = JSONDecoder()
+			decoder.keyDecodingStrategy = .convertFromSnakeCase
+			let json1 = try JSONSerialization.jsonObject(with: data)
+			print("the json: ", json1)
+			let textCompletion = try decoder.decode(TextCompletion.self, from: data)
+			return textCompletion
+//		} catch {
+//			print("what's the error?: ", error)
+//			throw error
+//		}
 		
-		let (data, response) = try await URLSession.shared.data(for: request)
-		guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw Error.invalidData }
-		let decoder = JSONDecoder()
-		decoder.keyDecodingStrategy = .convertFromSnakeCase
-		let textCompletion = try decoder.decode(TextCompletion.self, from: data)
-		return textCompletion
 	}
 }
