@@ -7,18 +7,6 @@
 
 import SwiftUI
 
-struct Note: Identifiable {
-	let id: Int
-	var title: String
-	var body: String
-	var topics: [Topic]
-}
-
-struct NewNote {
-	let title: String
-	let body: String
-}
-
 struct MyNotesView: View {
 	@StateObject var viewModel = MyNotesViewModel()
 	@State var presentingNewNoteView = true

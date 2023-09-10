@@ -7,29 +7,12 @@
 
 import SwiftUI
 
-struct ChatGPTTopic {
-	let name: String
-	var added: Bool
-}
-
-struct Topic {
-	let id: String
-	var name: String
-	var added: Bool
-}
-
-extension Array where Element: Equatable {
-	 mutating func remove(object: Element) {
-		 guard let index = firstIndex(of: object) else {return}
-		 remove(at: index)
-	 }
-}
 struct TopicsView: View {
 	@StateObject var viewModel = TopicsViewModel()
 	@Binding var note: Note
-	@Environment(\.presentationMode) var presentationMode
 	@State var totalNotes = 0
 	let completion: () -> Void
+	@Environment(\.presentationMode) var presentationMode
 	
 	var body: some View {
 		VStack {
@@ -45,24 +28,15 @@ struct TopicsView: View {
 						Spacer()
 						Button {
 							viewModel.chatGPTTopics[index].added.toggle()
-							if viewModel.chatGPTTopics[index].added {
-								totalNotes += 1
-							} else {
-								totalNotes -= 1
-							}
+							udpateTotalNotes(with: viewModel.chatGPTTopics[index])
 						} label: {
 							viewModel.chatGPTTopics[index].added ? Image(systemName: "minus.circle") : Image(systemName: "plus.circle")
 						}
-						.disabled(disableAddButton(for: viewModel.chatGPTTopics[index]))
+						.disabled(disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
 					}
 				}
 			}
-			Button("Done") {
-				let newTopics = viewModel.chatGPTTopics.map { Topic(id: UUID().uuidString, name: $0.name, added: $0.added) }.filter({ $0.added })
-				note.topics.append(contentsOf: newTopics)
-				presentationMode.wrappedValue.dismiss()
-			}
-			.disabled(totalNotes == 5)
+			doneButton
 		}
 		.onAppear {
 			viewModel.getTopics(currentTopics: note.topics)
@@ -70,7 +44,15 @@ struct TopicsView: View {
 		}
 	}
 	
-	private func disableAddButton(for chatGPTTopic: ChatGPTTopic) -> Bool {
+	private func udpateTotalNotes(with chatGPTTopic: ChatGPTTopic) {
+		if chatGPTTopic.added {
+			totalNotes += 1
+		} else {
+			totalNotes -= 1
+		}
+	}
+	
+	private func disableAddTopicButton(for chatGPTTopic: ChatGPTTopic) -> Bool {
 		if totalNotes == 5 && !chatGPTTopic.added {
 			return true
 		}
@@ -83,6 +65,16 @@ struct TopicsView: View {
 			return !noteExist ? ChatGPTTopic(name: chatGPTTopic.name, added: chatGPTTopic.added) : nil
 		}
 		return chatGPTTopics
+	}
+	
+	var doneButton: some View {
+		Button("Done") {
+			let newTopics = viewModel.chatGPTTopics.map { Topic(id: UUID().uuidString, name: $0.name, added: $0.added) }.filter({ $0.added })
+			note.topics.append(contentsOf: newTopics)
+			presentationMode.wrappedValue.dismiss()
+		}
+		.buttonStyle(.borderedProminent)
+		.disabled(totalNotes == 5)
 	}
 }
 

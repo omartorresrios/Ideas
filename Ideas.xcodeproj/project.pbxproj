@@ -17,6 +17,9 @@
 		24B87ECB2AA18F5E00D18405 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87ECA2AA18F5E00D18405 /* Service.swift */; };
 		24B87ECD2AA18F7400D18405 /* OpenAICompletionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87ECC2AA18F7400D18405 /* OpenAICompletionModel.swift */; };
 		24B87ECF2AA43C6700D18405 /* MyNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87ECE2AA43C6700D18405 /* MyNotesViewModel.swift */; };
+		24DB4C712AAE861B00DE1EE5 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4C702AAE861B00DE1EE5 /* Topic.swift */; };
+		24DB4C742AAE865500DE1EE5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4C732AAE865500DE1EE5 /* Extensions.swift */; };
+		24DB4C782AAE88CF00DE1EE5 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4C772AAE88CF00DE1EE5 /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		24B87ECA2AA18F5E00D18405 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		24B87ECC2AA18F7400D18405 /* OpenAICompletionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAICompletionModel.swift; sourceTree = "<group>"; };
 		24B87ECE2AA43C6700D18405 /* MyNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNotesViewModel.swift; sourceTree = "<group>"; };
+		24DB4C702AAE861B00DE1EE5 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		24DB4C732AAE865500DE1EE5 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		24DB4C772AAE88CF00DE1EE5 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,17 +80,17 @@
 		24B87EB42AA18E9C00D18405 /* Ideas */ = {
 			isa = PBXGroup;
 			children = (
-				24A857952AA6C30D006CFE40 /* Info.plist */,
 				24B87EB52AA18E9C00D18405 /* IdeasApp.swift */,
+				24DB4C722AAE864700DE1EE5 /* Utils */,
+				24DB4C6F2AAE860700DE1EE5 /* Models */,
 				24DB4C6C2AAAA87500DE1EE5 /* NoteView */,
+				24118B2E2AA98F8600FC9E00 /* Topics */,
+				24DB4C752AAE885600DE1EE5 /* MyNotesView */,
+				24DB4C762AAE888A00DE1EE5 /* ApiClient */,
+				24A857952AA6C30D006CFE40 /* Info.plist */,
 				24B87EB92AA18E9D00D18405 /* Assets.xcassets */,
 				24B87EBB2AA18E9D00D18405 /* Ideas.entitlements */,
 				24B87EBC2AA18E9D00D18405 /* Preview Content */,
-				24118B2E2AA98F8600FC9E00 /* Topics */,
-				24B87EC62AA18F1000D18405 /* MyNotesView.swift */,
-				24B87ECA2AA18F5E00D18405 /* Service.swift */,
-				24B87ECC2AA18F7400D18405 /* OpenAICompletionModel.swift */,
-				24B87ECE2AA43C6700D18405 /* MyNotesViewModel.swift */,
 			);
 			path = Ideas;
 			sourceTree = "<group>";
@@ -103,6 +109,41 @@
 				24B87EB72AA18E9C00D18405 /* NoteView.swift */,
 			);
 			path = NoteView;
+			sourceTree = "<group>";
+		};
+		24DB4C6F2AAE860700DE1EE5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				24DB4C702AAE861B00DE1EE5 /* Topic.swift */,
+				24B87ECC2AA18F7400D18405 /* OpenAICompletionModel.swift */,
+				24DB4C772AAE88CF00DE1EE5 /* Note.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		24DB4C722AAE864700DE1EE5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				24DB4C732AAE865500DE1EE5 /* Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		24DB4C752AAE885600DE1EE5 /* MyNotesView */ = {
+			isa = PBXGroup;
+			children = (
+				24B87EC62AA18F1000D18405 /* MyNotesView.swift */,
+				24B87ECE2AA43C6700D18405 /* MyNotesViewModel.swift */,
+			);
+			path = MyNotesView;
+			sourceTree = "<group>";
+		};
+		24DB4C762AAE888A00DE1EE5 /* ApiClient */ = {
+			isa = PBXGroup;
+			children = (
+				24B87ECA2AA18F5E00D18405 /* Service.swift */,
+			);
+			path = ApiClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,7 +221,10 @@
 				24B87EC52AA18EF100D18405 /* TopicsView.swift in Sources */,
 				24B87EB62AA18E9C00D18405 /* IdeasApp.swift in Sources */,
 				24B87ECF2AA43C6700D18405 /* MyNotesViewModel.swift in Sources */,
+				24DB4C742AAE865500DE1EE5 /* Extensions.swift in Sources */,
 				24B87EC72AA18F1000D18405 /* MyNotesView.swift in Sources */,
+				24DB4C782AAE88CF00DE1EE5 /* Note.swift in Sources */,
+				24DB4C712AAE861B00DE1EE5 /* Topic.swift in Sources */,
 				24118B302AA98F9700FC9E00 /* TopicsViewModel.swift in Sources */,
 				24B87ECB2AA18F5E00D18405 /* Service.swift in Sources */,
 			);
