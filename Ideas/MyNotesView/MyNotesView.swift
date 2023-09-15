@@ -31,7 +31,7 @@ struct MyNotesView: View {
 			ForEach($viewModel.notes) { $note in
 				ZStack(alignment: .leading) {
 					NavigationLink {
-						NoteView(note: $note)
+						NoteView(note: $note) { _ in }
 							.toolbarRole(.editor)
 					} label: {
 						EmptyView()
@@ -46,7 +46,6 @@ struct MyNotesView: View {
 					}
 				}
 			}
-			
 		}
 		.navigationTitle("My notes")
 		.navigationBarTitleDisplayMode(.inline)
@@ -54,8 +53,12 @@ struct MyNotesView: View {
 	
 	var newNote: some View {
 		NavigationLink {
-			NoteView(note: .constant(Note(id: 0, title: "", body: "", topics: [])))
-				.toolbarRole(.editor)
+			NoteView(note: $viewModel.emptyNote) { note in
+				if !note.isEmpty {
+					viewModel.addNewNote(note)
+				}
+			}
+			.toolbarRole(.editor)
 		} label: {
 			Image(systemName: "square.and.pencil")
 				.resizable()

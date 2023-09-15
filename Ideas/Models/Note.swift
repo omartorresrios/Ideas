@@ -8,8 +8,12 @@
 import Foundation
 
 struct Note: Identifiable {
-	let id: Int
+	var id: String
 	var title: String
 	var body: String
 	var topics: [Topic]
+	
+	var isEmpty: Bool {
+		title.isEmpty && body.isEmpty
+	}
 }

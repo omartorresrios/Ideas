@@ -14,8 +14,27 @@ struct NoteView: View {
 	@State private var presentingTopicsView = false
 	@FocusState private var noteFocused: Bool
 	@Binding var note: Note
+	@Environment(\.presentationMode) var presentationMode
+	let completion: (Note) -> Void
 	
 	var body: some View {
+		VStack {
+			Spacer()
+				.navigationBarBackButtonHidden()
+				.toolbar {
+					ToolbarItem(placement: .navigationBarLeading) {
+						Button(
+							action: {
+								presentationMode.wrappedValue.dismiss()
+								completion(note)
+							},
+							label: {
+								Image(systemName: "chevron.backward")
+							}
+						)
+					}
+				}
+		}
 		GeometryReader { geometry in
 			ScrollView {
 				topics
@@ -23,7 +42,6 @@ struct NoteView: View {
 					TextField("Title", text: $note.title, axis: .vertical)
 						.focused($noteFocused)
 						.padding()
-					
 					TextEditor(text: $note.body)
 						.scrollContentBackground(.hidden)
 				}
@@ -35,13 +53,14 @@ struct NoteView: View {
 				themesButton
 			}
 		}
-		
 		.onAppear {
-			if note.title.isEmpty && note.body.isEmpty {
-				noteFocused = true
-			} else {
-				noteFocused = false
+			if note.id.isEmpty {
+				note.id = UUID().uuidString
 			}
+			noteFocused = note.isEmpty
+//			if let firstParagraph = note.body.components(separatedBy: CharacterSet.newlines).first {
+//				print(firstParagraph)
+//			}
 		}
 		.onDisappear {
 			UINavigationBar.setAnimationsEnabled(true)
@@ -95,6 +114,6 @@ struct NoteView: View {
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		NoteView(note: .constant(Note(id: 1, title: "title", body: "body", topics: [])))
+		NoteView(note: .constant(Note(id: "1", title: "title", body: "body", topics: [])), completion: { _ in })
 	}
 }
