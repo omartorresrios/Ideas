@@ -12,9 +12,20 @@ struct Note: Identifiable {
 	var title: String
 	var body: String
 	var topics: [Topic]
+	var ideas: [Idea]
 	
 	var isEmptyNote: Bool {
 		get { title.isEmpty && body.isEmpty }
 		set {}
 	}
+	
+	mutating func addIdeasToBody() {
+		let ideasText = ideas.map { $0.body }.joined(separator: "\n")
+		body = body + "\n" + ideasText
+	}
+}
+
+struct Idea {
+	let body: String
+	var added = false
 }

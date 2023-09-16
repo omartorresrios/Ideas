@@ -12,18 +12,14 @@ struct NoteView: View {
 	@State private var noteText = ""
 	@State private var finalNote = ""
 	@State private var presentingTopicsView = false
+	@State private var presentingAugmentView = false
 	@FocusState private var titleFocused: Bool
 	@FocusState private var bodyFocused: Bool
-	var note: Binding<Note>
+	@Binding var note: Note
 	@State var changeColor = false
 	@State var enableBodyEditing = false
 	@Environment(\.presentationMode) var presentationMode
-	let completion: ((Note) -> Void)?
-	
-	init(note: Binding<Note>, completion: ((Note) -> Void)? = nil) {
-		self.note = note
-		self.completion = completion
-	}
+	let completion: ((Note) -> Void)
 	
 	var body: some View {
 		VStack {
@@ -34,7 +30,7 @@ struct NoteView: View {
 						Button(
 							action: {
 								presentationMode.wrappedValue.dismiss()
-								completion?(note.wrappedValue)
+								completion(note)
 							},
 							label: {
 								Image(systemName: "chevron.backward")
@@ -47,10 +43,10 @@ struct NoteView: View {
 			ScrollView {
 				topics
 				VStack(spacing: 0) {
-					TextField("Title", text: note.title, axis: .vertical)
-						.onChange(of: note.wrappedValue.title) { newValue in
+					TextField("Title", text: $note.title, axis: .vertical)
+						.onChange(of: note.title) { newValue in
 							if newValue.last == "\n" {
-								note.title.wrappedValue = newValue.components(separatedBy: CharacterSet.newlines).filter { !$0.isEmpty }.joined(separator: "\n")
+								note.title = newValue.components(separatedBy: CharacterSet.newlines).filter { !$0.isEmpty }.joined(separator: "\n")
 								bodyFocused = true
 								enableBodyEditing = true
 							}
@@ -58,7 +54,7 @@ struct NoteView: View {
 						.submitLabel(.return)
 						.focused($titleFocused)
 						.padding()
-					TextEditor(text: note.projectedValue.body)
+					TextEditor(text: $note.body)
 						.disabled(!enableBodyEditing)
 						.focused($bodyFocused)
 						.foregroundColor(.blue)
@@ -68,15 +64,16 @@ struct NoteView: View {
 			}
 		}
 		.toolbar {
-			ToolbarItem(placement: .navigationBarTrailing) {
+			ToolbarItemGroup(placement: .navigationBarTrailing) {
+				augmentButton
 				themesButton
 			}
 		}
 		.onAppear {
 			if note.id.isEmpty {
-				note.id.wrappedValue = UUID().uuidString
+				note.id = UUID().uuidString
 			}
-			titleFocused = note.isEmptyNote.wrappedValue
+			titleFocused = note.isEmptyNote
 		}
 		.onDisappear {
 			UINavigationBar.setAnimationsEnabled(true)
@@ -85,14 +82,29 @@ struct NoteView: View {
 	
 	var topics: some View {
 		HStack {
-			ForEach(note.wrappedValue.topics.indices, id: \.self) { index in
-				let topic = note.wrappedValue.topics[index]
+			ForEach(note.topics.indices, id: \.self) { index in
+				let topic = note.topics[index]
 				Text(topic.name)
 					.padding(10)
 					.background(.gray)
 					.foregroundStyle(.white)
 					.clipShape(Capsule())
 			}
+		}
+	}
+	
+	var augmentButton: some View {
+		Button {
+			presentingAugmentView = true
+		} label: {
+			Text("Augment")
+		}
+		.sheet(isPresented: $presentingAugmentView) {
+			AugmentIdeasView(note: $note) {
+				enableBodyEditing = true
+			}
+			.presentationDetents([.large])
+			.interactiveDismissDisabled()
 		}
 	}
 	
@@ -119,7 +131,7 @@ struct NoteView: View {
 		}
 		.disabled(note.topics.count == 5)
 		.sheet(isPresented: $presentingTopicsView) {
-			TopicsView(note: note) {
+			TopicsView(note: $note) {
 				presentingTopicsView = false
 			}
 			.presentationDetents([.fraction(0.60)])
@@ -130,6 +142,7 @@ struct NoteView: View {
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		NoteView(note: .constant(Note(id: "1", title: "title", body: "body", topics: [])), completion: { _ in })
+		NoteView(note: .constant(Note(id: "1", title: "title", body: "body", topics: [], ideas: [])),
+				 completion: { _ in })
 	}
 }

@@ -80,7 +80,7 @@ struct TopicsView: View {
 
 struct TopicsView_Previews: PreviewProvider {
 	static var previews: some View {
-		TopicsView(note: .constant(Note(id: "23", title: "title", body: "body", topics: [])), totalNotes: 0, completion: { })
+		TopicsView(note: .constant(Note(id: "23", title: "title", body: "body", topics: [], ideas: [])), totalNotes: 0, completion: { })
 	}
 }
 extension Array where Element: Hashable {

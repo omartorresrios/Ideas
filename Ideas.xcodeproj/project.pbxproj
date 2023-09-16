@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		24118B302AA98F9700FC9E00 /* TopicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24118B2F2AA98F9700FC9E00 /* TopicsViewModel.swift */; };
+		242AD2F12AB64B980028DFED /* AugmentIdeasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AD2F02AB64B980028DFED /* AugmentIdeasView.swift */; };
 		24B87EB62AA18E9C00D18405 /* IdeasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87EB52AA18E9C00D18405 /* IdeasApp.swift */; };
 		24B87EB82AA18E9C00D18405 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87EB72AA18E9C00D18405 /* NoteView.swift */; };
 		24B87EBA2AA18E9D00D18405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24B87EB92AA18E9D00D18405 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		24118B2F2AA98F9700FC9E00 /* TopicsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsViewModel.swift; sourceTree = "<group>"; };
+		242AD2F02AB64B980028DFED /* AugmentIdeasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugmentIdeasView.swift; sourceTree = "<group>"; };
 		24A857952AA6C30D006CFE40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24B87EB22AA18E9C00D18405 /* Ideas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ideas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B87EB52AA18E9C00D18405 /* IdeasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeasApp.swift; sourceTree = "<group>"; };
@@ -61,6 +63,13 @@
 			path = Topics;
 			sourceTree = "<group>";
 		};
+		242AD2F22AB64B9C0028DFED /* Augment */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Augment;
+			sourceTree = "<group>";
+		};
 		24B87EA92AA18E9C00D18405 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +93,7 @@
 				24DB4C722AAE864700DE1EE5 /* Utils */,
 				24DB4C6F2AAE860700DE1EE5 /* Models */,
 				24DB4C6C2AAAA87500DE1EE5 /* NoteView */,
+				242AD2F22AB64B9C0028DFED /* Augment */,
 				24118B2E2AA98F8600FC9E00 /* Topics */,
 				24DB4C752AAE885600DE1EE5 /* MyNotesView */,
 				24DB4C762AAE888A00DE1EE5 /* ApiClient */,
@@ -91,6 +101,7 @@
 				24B87EB92AA18E9D00D18405 /* Assets.xcassets */,
 				24B87EBB2AA18E9D00D18405 /* Ideas.entitlements */,
 				24B87EBC2AA18E9D00D18405 /* Preview Content */,
+				242AD2F02AB64B980028DFED /* AugmentIdeasView.swift */,
 			);
 			path = Ideas;
 			sourceTree = "<group>";
@@ -227,6 +238,7 @@
 				24DB4C712AAE861B00DE1EE5 /* Topic.swift in Sources */,
 				24118B302AA98F9700FC9E00 /* TopicsViewModel.swift in Sources */,
 				24B87ECB2AA18F5E00D18405 /* Service.swift in Sources */,
+				242AD2F12AB64B980028DFED /* AugmentIdeasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

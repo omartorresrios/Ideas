@@ -31,7 +31,7 @@ struct MyNotesView: View {
 			ForEach($viewModel.notes) { $note in
 				ZStack(alignment: .leading) {
 					NavigationLink {
-						NoteView(note: $note)
+						NoteView(note: $note) { _ in }
 							.toolbarRole(.editor)
 					} label: {
 						EmptyView()
