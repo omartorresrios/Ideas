@@ -12,10 +12,18 @@ struct NoteView: View {
 	@State private var noteText = ""
 	@State private var finalNote = ""
 	@State private var presentingTopicsView = false
-	@FocusState private var noteFocused: Bool
-	@Binding var note: Note
+	@FocusState private var titleFocused: Bool
+	@FocusState private var bodyFocused: Bool
+	var note: Binding<Note>
+	@State var changeColor = false
+	@State var enableBodyEditing = false
 	@Environment(\.presentationMode) var presentationMode
-	let completion: (Note) -> Void
+	let completion: ((Note) -> Void)?
+	
+	init(note: Binding<Note>, completion: ((Note) -> Void)? = nil) {
+		self.note = note
+		self.completion = completion
+	}
 	
 	var body: some View {
 		VStack {
@@ -26,7 +34,7 @@ struct NoteView: View {
 						Button(
 							action: {
 								presentationMode.wrappedValue.dismiss()
-								completion(note)
+								completion?(note.wrappedValue)
 							},
 							label: {
 								Image(systemName: "chevron.backward")
@@ -39,10 +47,21 @@ struct NoteView: View {
 			ScrollView {
 				topics
 				VStack(spacing: 0) {
-					TextField("Title", text: $note.title, axis: .vertical)
-						.focused($noteFocused)
+					TextField("Title", text: note.title, axis: .vertical)
+						.onChange(of: note.wrappedValue.title) { newValue in
+							if newValue.last == "\n" {
+								note.title.wrappedValue = newValue.components(separatedBy: CharacterSet.newlines).filter { !$0.isEmpty }.joined(separator: "\n")
+								bodyFocused = true
+								enableBodyEditing = true
+							}
+						}
+						.submitLabel(.return)
+						.focused($titleFocused)
 						.padding()
-					TextEditor(text: $note.body)
+					TextEditor(text: note.projectedValue.body)
+						.disabled(!enableBodyEditing)
+						.focused($bodyFocused)
+						.foregroundColor(.blue)
 						.scrollContentBackground(.hidden)
 				}
 				.frame(height: geometry.size.height)
@@ -55,12 +74,9 @@ struct NoteView: View {
 		}
 		.onAppear {
 			if note.id.isEmpty {
-				note.id = UUID().uuidString
+				note.id.wrappedValue = UUID().uuidString
 			}
-			noteFocused = note.isEmpty
-//			if let firstParagraph = note.body.components(separatedBy: CharacterSet.newlines).first {
-//				print(firstParagraph)
-//			}
+			titleFocused = note.isEmptyNote.wrappedValue
 		}
 		.onDisappear {
 			UINavigationBar.setAnimationsEnabled(true)
@@ -69,8 +85,8 @@ struct NoteView: View {
 	
 	var topics: some View {
 		HStack {
-			ForEach(note.topics.indices, id: \.self) { index in
-				let topic = note.topics[index]
+			ForEach(note.wrappedValue.topics.indices, id: \.self) { index in
+				let topic = note.wrappedValue.topics[index]
 				Text(topic.name)
 					.padding(10)
 					.background(.gray)
@@ -103,7 +119,7 @@ struct NoteView: View {
 		}
 		.disabled(note.topics.count == 5)
 		.sheet(isPresented: $presentingTopicsView) {
-			TopicsView(note: $note) {
+			TopicsView(note: note) {
 				presentingTopicsView = false
 			}
 			.presentationDetents([.fraction(0.60)])

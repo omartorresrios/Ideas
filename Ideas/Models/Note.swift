@@ -13,7 +13,8 @@ struct Note: Identifiable {
 	var body: String
 	var topics: [Topic]
 	
-	var isEmpty: Bool {
-		title.isEmpty && body.isEmpty
+	var isEmptyNote: Bool {
+		get { title.isEmpty && body.isEmpty }
+		set {}
 	}
 }
