@@ -20,7 +20,7 @@ struct NoteView: View {
 	@State var originalTitle = ""
 	@State var enableBodyEditing = true
 	@Environment(\.presentationMode) var presentationMode
-	let completion: ((Note) -> Void)
+	let completion: ((Note, Bool) -> Void)
 	
 	var body: some View {
 		VStack {
@@ -31,10 +31,10 @@ struct NoteView: View {
 						Button(
 							action: {
 								if noteHasBeenUpdated() {
-									print("update note!")
+									completion(note, true)
 								}
 								presentationMode.wrappedValue.dismiss()
-								completion(note)
+								completion(note, false)
 							},
 							label: {
 								Image(systemName: "chevron.backward")
@@ -158,7 +158,6 @@ struct NoteView: View {
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
 		NoteView(note: .constant(Note(id: "1", title: "title", body: "body", topics: [], ideas: [])),
-				 originalBody: "",
-				 completion: { _ in })
+				 originalBody: "", completion: { _, _ in })
 	}
 }

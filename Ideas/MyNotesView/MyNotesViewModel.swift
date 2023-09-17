@@ -12,8 +12,8 @@ class MyNotesViewModel: ObservableObject {
 	@Published var emptyNote = MyNotesViewModel.emptyNote()
 	
 	init() {
-		notes = [Note(id: "1", title: "first note title", body: "first note body", topics: [], ideas: []),
-				 Note(id: "2",
+		notes = [Note(id: UUID().uuidString, title: "first note title", body: "first note body", topics: [], ideas: []),
+				 Note(id: UUID().uuidString,
 					  title: "second note title",
 					  body: "second note body",
 					  topics: [Topic(id: UUID().uuidString, name: "Health", added: true),

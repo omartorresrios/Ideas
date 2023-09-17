@@ -31,8 +31,10 @@ struct MyNotesView: View {
 			ForEach($viewModel.notes) { $note in
 				ZStack(alignment: .leading) {
 					NavigationLink {
-						NoteView(note: $note) { _ in }
-							.toolbarRole(.editor)
+						NoteView(note: $note) { note, toUpdate in
+							print("Note \(note.id)-\(note.body) needs to be updated")
+						}
+						.toolbarRole(.editor)
 					} label: {
 						EmptyView()
 					}
@@ -53,7 +55,7 @@ struct MyNotesView: View {
 	
 	var newNote: some View {
 		NavigationLink {
-			NoteView(note: $viewModel.emptyNote) { note in
+			NoteView(note: $viewModel.emptyNote) { note, _ in
 				if !note.isEmptyNote {
 					viewModel.addNewNote(note)
 				}
