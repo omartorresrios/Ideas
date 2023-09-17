@@ -16,8 +16,9 @@ struct NoteView: View {
 	@FocusState private var titleFocused: Bool
 	@FocusState private var bodyFocused: Bool
 	@Binding var note: Note
-	@State var changeColor = false
-	@State var enableBodyEditing = false
+	@State var originalBody = ""
+	@State var originalTitle = ""
+	@State var enableBodyEditing = true
 	@Environment(\.presentationMode) var presentationMode
 	let completion: ((Note) -> Void)
 	
@@ -29,6 +30,9 @@ struct NoteView: View {
 					ToolbarItem(placement: .navigationBarLeading) {
 						Button(
 							action: {
+								if noteHasBeenUpdated() {
+									print("update note!")
+								}
 								presentationMode.wrappedValue.dismiss()
 								completion(note)
 							},
@@ -51,13 +55,13 @@ struct NoteView: View {
 								enableBodyEditing = true
 							}
 						}
+						.font(Font.title3.weight(.semibold))
 						.submitLabel(.return)
 						.focused($titleFocused)
 						.padding()
 					TextEditor(text: $note.body)
 						.disabled(!enableBodyEditing)
 						.focused($bodyFocused)
-						.foregroundColor(.blue)
 						.scrollContentBackground(.hidden)
 				}
 				.frame(height: geometry.size.height)
@@ -70,10 +74,7 @@ struct NoteView: View {
 			}
 		}
 		.onAppear {
-			if note.id.isEmpty {
-				note.id = UUID().uuidString
-			}
-			titleFocused = note.isEmptyNote
+			setInitialValues()
 		}
 		.onDisappear {
 			UINavigationBar.setAnimationsEnabled(true)
@@ -138,11 +139,26 @@ struct NoteView: View {
 			.interactiveDismissDisabled()
 		}
 	}
+	
+	private func noteHasBeenUpdated() -> Bool {
+		note.body != originalBody || note.title != originalTitle
+	}
+	
+	private func setInitialValues() {
+		if note.isEmptyNote {
+			titleFocused = note.isEmptyNote
+			enableBodyEditing = false
+		} else {
+			originalBody = note.body
+			originalTitle = note.title
+		}
+	}
 }
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
 		NoteView(note: .constant(Note(id: "1", title: "title", body: "body", topics: [], ideas: [])),
+				 originalBody: "",
 				 completion: { _ in })
 	}
 }

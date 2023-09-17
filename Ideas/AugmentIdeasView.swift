@@ -47,8 +47,11 @@ struct AugmentIdeasView: View {
 	var doneButton: some View {
 		Button("Done") {
 			let newIdeas = viewModel.newIdeas.filter({ $0.added })
+			print("suggestions: ", newIdeas)
 			note.ideas.append(contentsOf: newIdeas)
-			note.addIdeasToBody()
+			if !newIdeas.isEmpty {
+				note.addIdeasToBody()
+			}
 			completionHandler()
 			presentationMode.wrappedValue.dismiss()
 		}
