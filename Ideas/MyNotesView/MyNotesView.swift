@@ -32,7 +32,7 @@ struct MyNotesView: View {
 				ZStack(alignment: .leading) {
 					NavigationLink {
 						NoteView(note: $note) { note, toUpdate in
-							print("Note \(note.id)-\(note.body) needs to be updated")
+							print("Note \(note.id)-\(note.body) needs to be updated")// hit here some api service endpoint to update the particular note. This will run in the background, so the user won't be affected from keep interacting witht the app).
 						}
 						.toolbarRole(.editor)
 					} label: {

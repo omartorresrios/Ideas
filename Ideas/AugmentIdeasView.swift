@@ -11,7 +11,7 @@ class AugmentIdeasViewModel: ObservableObject {
 	@Published var newIdeas = [Idea]()
 	
 	init() {
-		newIdeas = [Idea(body: "This is the first suggestion to explore"),
+		newIdeas = [Idea(body: "This is the first suggestion to explore for example this is a large idea of more than 1 line"),
 					Idea(body: "This is the second suggestion to explore"),
 					Idea(body: "This is the third suggestion to explore")]
 	}
@@ -47,11 +47,7 @@ struct AugmentIdeasView: View {
 	var doneButton: some View {
 		Button("Done") {
 			let newIdeas = viewModel.newIdeas.filter({ $0.added })
-			print("suggestions: ", newIdeas)
 			note.ideas.append(contentsOf: newIdeas)
-			if !newIdeas.isEmpty {
-				note.addIdeasToBody()
-			}
 			completionHandler()
 			presentationMode.wrappedValue.dismiss()
 		}

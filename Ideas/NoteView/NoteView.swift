@@ -19,6 +19,7 @@ struct NoteView: View {
 	@State var originalBody = ""
 	@State var originalTitle = ""
 	@State var enableBodyEditing = true
+	@State var showIdeasToExplore = false
 	@Environment(\.presentationMode) var presentationMode
 	let completion: ((Note, Bool) -> Void)
 	
@@ -55,14 +56,31 @@ struct NoteView: View {
 								enableBodyEditing = true
 							}
 						}
+						.onChange(of: titleFocused) { newValue in
+							handleIdeasToExploreView(with: newValue)
+						}
 						.font(Font.title3.weight(.semibold))
 						.submitLabel(.return)
 						.focused($titleFocused)
 						.padding()
+						
 					TextEditor(text: $note.body)
 						.disabled(!enableBodyEditing)
 						.focused($bodyFocused)
 						.scrollContentBackground(.hidden)
+						.onChange(of: bodyFocused) { newValue in
+							handleIdeasToExploreView(with: newValue)
+						}
+					if showIdeasToExplore {
+						Text(note.ideasToExplore())
+							.lineLimit(nil)
+							.frame(maxWidth: .infinity, alignment: .leading)
+							.padding()
+							.foregroundColor(.white)
+							.background(.gray)
+							.transition(.move(edge: .trailing))
+					}
+//					.frame(maxHeight: .infinity)
 				}
 				.frame(height: geometry.size.height)
 			}
@@ -73,11 +91,37 @@ struct NoteView: View {
 				themesButton
 			}
 		}
+		ideasToExploreButton
 		.onAppear {
 			setInitialValues()
 		}
 		.onDisappear {
 			UINavigationBar.setAnimationsEnabled(true)
+		}
+	}
+	
+	@ViewBuilder
+	var ideasToExploreButton: some View {
+		if !note.ideas.isEmpty {
+			HStack {
+				Spacer()
+				VStack {
+					Button {
+						if titleFocused {
+							titleFocused = false
+						}
+						if bodyFocused {
+							bodyFocused = false
+						}
+						withAnimation(.easeInOut(duration: 0.3)) {
+							showIdeasToExplore.toggle()
+						}
+					} label: {
+						showIdeasToExplore ? Image(systemName: "arrow.right.square.fill") : Image(systemName: "arrow.left.square.fill")
+					}
+				}
+				.padding()
+			}
 		}
 	}
 	
@@ -142,6 +186,12 @@ struct NoteView: View {
 	
 	private func noteHasBeenUpdated() -> Bool {
 		note.body != originalBody || note.title != originalTitle
+	}
+	
+	private func handleIdeasToExploreView(with focusedStatus: Bool) {
+		if focusedStatus && showIdeasToExplore {
+			showIdeasToExplore = false
+		}
 	}
 	
 	private func setInitialValues() {

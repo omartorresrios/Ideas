@@ -15,17 +15,20 @@ struct Note: Identifiable {
 	var ideas: [Idea]
 	
 	var isEmptyNote: Bool {
-		get { title.isEmpty && body.isEmpty }
+		get { title.isEmpty }
 		set {}
 	}
 	
-	mutating func addIdeasToBody() {
-		let ideasText = ideas.map { $0.body }.joined(separator: "\n")
-		body = body + "\n" + ideasText
+	func ideasToExplore() -> String {
+		let ideasString = ideas.map {
+			"\u{2022} " + $0.body
+		}.joined(separator: "\n")
+		let subtitle = "New ideas to explore"
+		return subtitle + "\n\n" + ideasString
 	}
 }
 
 struct Idea {
-	let body: String
+	var body: String
 	var added = false
 }

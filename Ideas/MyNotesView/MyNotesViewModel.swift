@@ -12,12 +12,17 @@ class MyNotesViewModel: ObservableObject {
 	@Published var emptyNote = MyNotesViewModel.emptyNote()
 	
 	init() {
-		notes = [Note(id: UUID().uuidString, title: "first note title", body: "first note body", topics: [], ideas: []),
+		notes = [Note(id: UUID().uuidString,
+					  title: "first note title",
+					  body: "first note body",
+					  topics: [],
+					  ideas: []),
 				 Note(id: UUID().uuidString,
 					  title: "second note title",
 					  body: "second note body",
 					  topics: [Topic(id: UUID().uuidString, name: "Health", added: true),
-							   Topic(id: UUID().uuidString, name: "Sports", added: true)], ideas: [])]
+							   Topic(id: UUID().uuidString, name: "Sports", added: true)],
+					  ideas: [])]
 	}
 	
 	func addNewNote(_ note: Note) {
