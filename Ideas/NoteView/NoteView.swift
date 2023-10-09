@@ -84,6 +84,9 @@ struct NoteView: View {
 				}
 				.frame(height: geometry.size.height)
 			}
+			.onAppear {
+				setInitialValues()
+			}
 		}
 		.toolbar {
 			ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -92,12 +95,6 @@ struct NoteView: View {
 			}
 		}
 		ideasToExploreButton
-		.onAppear {
-			setInitialValues()
-		}
-		.onDisappear {
-			UINavigationBar.setAnimationsEnabled(true)
-		}
 	}
 	
 	@ViewBuilder
