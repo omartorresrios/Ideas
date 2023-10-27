@@ -182,7 +182,9 @@ struct NoteView: View {
 	}
 	
 	private func noteHasBeenUpdated() -> Bool {
-		note.body != originalBody || note.title != originalTitle
+		note.title = note.body.trimmingCharacters(in: .whitespaces)
+		note.body = note.body.trimmingCharacters(in: .whitespaces)
+		return note.body != originalBody || note.title != originalTitle
 	}
 	
 	private func handleIdeasToExploreView(with focusedStatus: Bool) {
