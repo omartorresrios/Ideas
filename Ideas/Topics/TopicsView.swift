@@ -60,11 +60,12 @@ struct TopicsView: View {
 	}
 	
 	private func getTopics() -> [ChatGPTTopic] {
-		let chatGPTTopics = viewModel.chatGPTTopics.compactMap { chatGPTTopic in
-			let noteExist = note.topics.contains { chatGPTTopic.name == $0.name }
-			return !noteExist ? ChatGPTTopic(name: chatGPTTopic.name, added: chatGPTTopic.added) : nil
+		let topics = viewModel.chatGPTTopics.compactMap { chatGPTTopic in
+			let existingNote = note.topics.contains { chatGPTTopic.name == $0.name }
+			return existingNote ? nil : ChatGPTTopic(name: chatGPTTopic.name,
+													 added: chatGPTTopic.added)
 		}
-		return chatGPTTopics
+		return topics
 	}
 	
 	var doneButton: some View {
