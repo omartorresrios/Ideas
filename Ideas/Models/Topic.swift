@@ -14,6 +14,6 @@ struct ChatGPTTopic {
 
 struct Topic {
 	let id: String
-	var name: String
-	var added: Bool
+	let name: String
+//	var added: Bool
 }

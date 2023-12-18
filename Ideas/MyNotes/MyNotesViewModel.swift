@@ -13,15 +13,15 @@ class MyNotesViewModel: ObservableObject {
 	
 	init() {
 		notes = [Note(id: UUID().uuidString,
-					  title: "first note title",
-					  body: "first note body",
+					  title: "The thoughts we carry by default",
+					  body: "This is only a test that represents the body for this note.",
 					  topics: [],
 					  ideas: []),
 				 Note(id: UUID().uuidString,
-					  title: "second note title",
-					  body: "second note body",
-					  topics: [Topic(id: UUID().uuidString, name: "Health", added: true),
-							   Topic(id: UUID().uuidString, name: "Sports", added: true)],
+					  title: "The defensive nature of our nature",
+					  body: "This is only a test that represents the body for this note.",
+					  topics: [Topic(id: UUID().uuidString, name: "Health"),
+							   Topic(id: UUID().uuidString, name: "Sports")],
 					  ideas: [])]
 	}
 	

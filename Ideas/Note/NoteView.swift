@@ -13,6 +13,7 @@ struct NoteView: View {
 	@State private var finalNote = ""
 	@State private var presentingTopicsView = false
 	@State private var presentingAugmentView = false
+	@State private var presentingRelatedNotesView = false
 	@FocusState private var titleFocused: Bool
 	@FocusState private var bodyFocused: Bool
 	@Binding var note: Note
@@ -24,26 +25,7 @@ struct NoteView: View {
 	let completion: ((Note, Bool) -> Void)
 	
 	var body: some View {
-		VStack {
-			Spacer()
-				.navigationBarBackButtonHidden()
-				.toolbar {
-					ToolbarItem(placement: .navigationBarLeading) {
-						Button(
-							action: {
-								if noteHasBeenUpdated() {
-									completion(note, true)
-								}
-								presentationMode.wrappedValue.dismiss()
-								completion(note, false)
-							},
-							label: {
-								Image(systemName: "chevron.backward")
-							}
-						)
-					}
-				}
-		}
+		navigationBarBackButton
 		GeometryReader { geometry in
 			ScrollView {
 				topics
@@ -91,10 +73,70 @@ struct NoteView: View {
 		.toolbar {
 			ToolbarItemGroup(placement: .navigationBarTrailing) {
 				augmentButton
-				themesButton
+				topicsButton
 			}
 		}
 		ideasToExploreButton
+	}
+	
+	var navigationBarBackButton: some View {
+		VStack {
+			Spacer()
+				.navigationBarBackButtonHidden()
+				.toolbar {
+					ToolbarItem(placement: .navigationBarLeading) {
+						Button(
+							action: {
+								if noteHasBeenUpdated() {
+									completion(note, true)
+								}
+								presentationMode.wrappedValue.dismiss()
+								completion(note, false)
+							},
+							label: {
+								Image(systemName: "chevron.backward")
+							}
+						)
+					}
+				}
+		}
+	}
+	
+	var topics: some View {
+		HStack {
+			ForEach(note.topics.indices, id: \.self) { index in
+				let topic = note.topics[index]
+				Button {
+					presentingRelatedNotesView = true
+				} label: {
+					Text(topic.name)
+						.padding(10)
+						.background(.gray)
+						.foregroundStyle(.white)
+						.clipShape(Capsule())
+				}
+				.sheet(isPresented: $presentingRelatedNotesView) {
+					RelatedNotesView()
+					.presentationDetents([.medium])
+//					.interactiveDismissDisabled()
+				}
+			}
+		}
+	}
+	
+	var augmentButton: some View {
+		Button {
+			presentingAugmentView = true
+		} label: {
+			Text("Augment")
+		}
+		.sheet(isPresented: $presentingAugmentView) {
+			AugmentIdeasView(note: $note) {
+				enableBodyEditing = true
+			}
+			.presentationDetents([.large])
+			.interactiveDismissDisabled()
+		}
 	}
 	
 	@ViewBuilder
@@ -122,35 +164,7 @@ struct NoteView: View {
 		}
 	}
 	
-	var topics: some View {
-		HStack {
-			ForEach(note.topics.indices, id: \.self) { index in
-				let topic = note.topics[index]
-				Text(topic.name)
-					.padding(10)
-					.background(.gray)
-					.foregroundStyle(.white)
-					.clipShape(Capsule())
-			}
-		}
-	}
-	
-	var augmentButton: some View {
-		Button {
-			presentingAugmentView = true
-		} label: {
-			Text("Augment")
-		}
-		.sheet(isPresented: $presentingAugmentView) {
-			AugmentIdeasView(note: $note) {
-				enableBodyEditing = true
-			}
-			.presentationDetents([.large])
-			.interactiveDismissDisabled()
-		}
-	}
-	
-	var themesButton: some View {
+	var topicsButton: some View {
 		Button {
 //			Task {
 //				do {
