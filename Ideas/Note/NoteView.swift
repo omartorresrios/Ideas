@@ -23,6 +23,7 @@ struct NoteView: View {
 	@State var showIdeasToExplore = false
 	@Environment(\.presentationMode) var presentationMode
 	let completion: ((Note, Bool) -> Void)
+	@State var selectedTopic = ""
 	
 	var body: some View {
 		navigationBarBackButton
@@ -44,7 +45,7 @@ struct NoteView: View {
 						.font(Font.title3.weight(.semibold))
 						.submitLabel(.return)
 						.focused($titleFocused)
-						.padding()
+						.padding([.leading, .trailing, .top])
 						
 					TextEditor(text: $note.body)
 						.disabled(!enableBodyEditing)
@@ -62,7 +63,6 @@ struct NoteView: View {
 							.background(.gray)
 							.transition(.move(edge: .trailing))
 					}
-//					.frame(maxHeight: .infinity)
 				}
 				.frame(height: geometry.size.height)
 			}
@@ -108,6 +108,7 @@ struct NoteView: View {
 				let topic = note.topics[index]
 				Button {
 					presentingRelatedNotesView = true
+					selectedTopic = topic.name
 				} label: {
 					Text(topic.name)
 						.padding(10)
@@ -116,9 +117,9 @@ struct NoteView: View {
 						.clipShape(Capsule())
 				}
 				.sheet(isPresented: $presentingRelatedNotesView) {
-					RelatedNotesView()
-					.presentationDetents([.medium])
-//					.interactiveDismissDisabled()
+					RelatedNotesView(on: selectedTopic)
+						.presentationDetents([.medium, .fraction(0.85)])
+						.presentationDragIndicator(.hidden)
 				}
 			}
 		}

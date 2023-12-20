@@ -32,3 +32,11 @@ struct Idea {
 	var body: String
 	var added = false
 }
+
+struct RelatedNote: Identifiable {
+	let id: String
+	let title: String
+	let body: String
+	let topics: [Topic]
+	let user: User
+}

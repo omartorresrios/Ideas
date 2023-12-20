@@ -21,8 +21,7 @@ struct MyNotesView: View {
 			newNote
 		}
 		.onAppear {
-			UITextView.appearance().textContainerInset =
-					 UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+			UITextView.appearance().textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
 		}
 	}
 	
@@ -45,6 +44,7 @@ struct MyNotesView: View {
 					VStack(alignment: .leading) {
 						Text(note.title)
 							.lineLimit(1)
+							.font(Font.body.weight(.semibold))
 						Text(note.body)
 							.lineLimit(1)
 					}

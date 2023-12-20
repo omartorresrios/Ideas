@@ -11,6 +11,8 @@
 		242AD2F12AB64B980028DFED /* AugmentIdeasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AD2F02AB64B980028DFED /* AugmentIdeasView.swift */; };
 		244EB5AF2B3091F600731A67 /* AugmentIdeasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244EB5AE2B3091F600731A67 /* AugmentIdeasViewModel.swift */; };
 		244EB5B12B30944300731A67 /* RelatedNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244EB5B02B30944300731A67 /* RelatedNotesView.swift */; };
+		244EB5B52B314B5300731A67 /* RelatedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244EB5B42B314B5300731A67 /* RelatedNoteView.swift */; };
+		244EB5B72B31800A00731A67 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244EB5B62B31800A00731A67 /* User.swift */; };
 		24B87EB62AA18E9C00D18405 /* IdeasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87EB52AA18E9C00D18405 /* IdeasApp.swift */; };
 		24B87EB82AA18E9C00D18405 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B87EB72AA18E9C00D18405 /* NoteView.swift */; };
 		24B87EBA2AA18E9D00D18405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24B87EB92AA18E9D00D18405 /* Assets.xcassets */; };
@@ -30,6 +32,8 @@
 		242AD2F02AB64B980028DFED /* AugmentIdeasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugmentIdeasView.swift; sourceTree = "<group>"; };
 		244EB5AE2B3091F600731A67 /* AugmentIdeasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugmentIdeasViewModel.swift; sourceTree = "<group>"; };
 		244EB5B02B30944300731A67 /* RelatedNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedNotesView.swift; sourceTree = "<group>"; };
+		244EB5B42B314B5300731A67 /* RelatedNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedNoteView.swift; sourceTree = "<group>"; };
+		244EB5B62B31800A00731A67 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24A857952AA6C30D006CFE40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24B87EB22AA18E9C00D18405 /* Ideas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ideas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B87EB52AA18E9C00D18405 /* IdeasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeasApp.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 				24B87EBB2AA18E9D00D18405 /* Ideas.entitlements */,
 				24B87EBC2AA18E9D00D18405 /* Preview Content */,
 				244EB5B02B30944300731A67 /* RelatedNotesView.swift */,
+				244EB5B42B314B5300731A67 /* RelatedNoteView.swift */,
 			);
 			path = Ideas;
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 				24DB4C702AAE861B00DE1EE5 /* Topic.swift */,
 				24B87ECC2AA18F7400D18405 /* OpenAICompletionModel.swift */,
 				24DB4C772AAE88CF00DE1EE5 /* Note.swift */,
+				244EB5B62B31800A00731A67 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -237,6 +243,7 @@
 				24B87EB82AA18E9C00D18405 /* NoteView.swift in Sources */,
 				244EB5B12B30944300731A67 /* RelatedNotesView.swift in Sources */,
 				24B87EC52AA18EF100D18405 /* TopicsView.swift in Sources */,
+				244EB5B72B31800A00731A67 /* User.swift in Sources */,
 				24B87EB62AA18E9C00D18405 /* IdeasApp.swift in Sources */,
 				24B87ECF2AA43C6700D18405 /* MyNotesViewModel.swift in Sources */,
 				24DB4C742AAE865500DE1EE5 /* Extensions.swift in Sources */,
@@ -247,6 +254,7 @@
 				24118B302AA98F9700FC9E00 /* TopicsViewModel.swift in Sources */,
 				24B87ECB2AA18F5E00D18405 /* Service.swift in Sources */,
 				242AD2F12AB64B980028DFED /* AugmentIdeasView.swift in Sources */,
+				244EB5B52B314B5300731A67 /* RelatedNoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
