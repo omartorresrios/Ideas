@@ -16,13 +16,24 @@ struct RelatedNoteView: View {
 		navigationBarBackButton
 		GeometryReader { geometry in
 			ScrollView {
-				VStack(alignment: .leading, spacing: 5) {
-					Text(note.title)
-						.font(Font.title3.weight(.semibold))
-					Text(note.body)
+				VStack(alignment: .leading, spacing: 8) {
+					HStack {
+						Image(systemName: "person.crop.circle")
+							.resizable()
+							.frame(width: 40, height: 40)
+						Text(note.user.name)
+						Spacer()
+					}
+					.padding([.leading, .trailing])
+					
+					VStack(alignment: .leading, spacing: 5) {
+						Text(note.title)
+							.font(Font.body.weight(.semibold))
+						Text(note.body)
+					}
+					.padding([.leading, .trailing])
 				}
-				.padding([.leading, .trailing, .bottom], 10)
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
+				.frame(maxHeight: .infinity)
 			}
 		}
     }

@@ -41,7 +41,6 @@ struct RelatedNotesView: View {
 				relatedNotes
 			}
 		}
-		
     }
 	
 	var relatedNotes: some View {
@@ -59,18 +58,18 @@ struct RelatedNotesView: View {
 						Image(systemName: "person.crop.circle")
 							.resizable()
 							.frame(width: 30, height: 30)
-//							.background(Color.red)
 						
-						VStack(alignment: .leading) {
+						VStack(alignment: .leading, spacing: 5) {
 							Text(note.user.name)
 								.font(Font.title3.weight(.semibold))
-							Text(note.title)
-								.lineLimit(1)
-								.font(Font.body.weight(.semibold))
-							Text(note.body)
-								.lineLimit(2)
+							VStack(alignment: .leading, spacing: 0) {
+								Text(note.title)
+									.lineLimit(1)
+									.font(Font.body.weight(.semibold))
+								Text(note.body)
+									.lineLimit(2)
+							}
 						}
-//						.background(Color.green)
 					}
 				}
 			}
