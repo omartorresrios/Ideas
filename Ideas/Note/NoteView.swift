@@ -135,8 +135,7 @@ struct NoteView: View {
 			AugmentIdeasView(note: $note) {
 				enableBodyEditing = true
 			}
-			.presentationDetents([.large])
-			.interactiveDismissDisabled()
+			.presentationDetents([.medium])
 		}
 	}
 	

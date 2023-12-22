@@ -7,6 +7,36 @@
 
 import SwiftUI
 
+struct IdeaItem: View {
+	@Binding var idea: Idea
+	private var isLast = false
+
+	init(idea: Binding<Idea>, isLast: Bool) {
+		self._idea = idea
+		self.isLast = isLast
+	}
+
+	var body: some View {
+		HStack(spacing: 2) {
+			Text(idea.body)
+				.foregroundStyle(.white)
+			Spacer()
+			Button {
+				idea.added.toggle()
+			} label: {
+				idea.added ? Image(systemName: "minus.circle").renderingMode(.template)
+					.foregroundColor(.white) : Image(systemName: "plus.circle").renderingMode(.template)
+					.foregroundColor(.white)
+			}
+		}
+		if !isLast {
+			Divider()
+				.overlay(.white)
+				.frame(maxWidth: 100)
+		}
+	}
+}
+
 struct AugmentIdeasView: View {
 	@Binding var note: Note
 	@StateObject var viewModel = AugmentIdeasViewModel()
@@ -14,34 +44,41 @@ struct AugmentIdeasView: View {
 	let completionHandler: () -> Void
 	
     var body: some View {
-		VStack {
-			Text("Explore new paths")
+		VStack(spacing: 0) {
+			Text("Explore new ideas")
 				.padding()
-			List {
-				ForEach(viewModel.newIdeas.indices, id: \.self) { index in
-					HStack {
-						Text(viewModel.newIdeas[index].body)
-						Spacer()
-						Button {
-							viewModel.newIdeas[index].added.toggle()
-						} label: {
-							viewModel.newIdeas[index].added ? Image(systemName: "minus.circle") : Image(systemName: "plus.circle")
-						}
+//				.background(Color.yellow)
+			ScrollView(.vertical, showsIndicators: false) {
+				VStack(spacing: 15) {
+					ForEach(viewModel.newIdeas.indices, id: \.self) { index in
+						IdeaItem(idea: $viewModel.newIdeas[index], isLast: viewModel.newIdeas.last == viewModel.newIdeas[index])
 					}
 				}
+				.padding()
+				.background(Color.gray)
+				.cornerRadius(8)
 			}
-			doneButton
+			.padding([.leading, .trailing])
+//			.background(Color.blue)
+			Spacer()
+			addButton
 		}
     }
 	
-	var doneButton: some View {
-		Button("Done") {
+	var addButton: some View {
+		Button {
 			let newIdeas = viewModel.newIdeas.filter({ $0.added })
 			note.ideas.append(contentsOf: newIdeas)
 			completionHandler()
 			presentationMode.wrappedValue.dismiss()
+		} label: {
+			Text(viewModel.ideasSelectedText)
+				.frame(maxWidth: .infinity)
 		}
 		.buttonStyle(.borderedProminent)
+		.controlSize(.large)
+		.padding()
+		.disabled(viewModel.noIdeasSelected())
 	}
 }
 

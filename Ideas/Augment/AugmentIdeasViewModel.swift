@@ -15,4 +15,12 @@ class AugmentIdeasViewModel: ObservableObject {
 					Idea(body: "This is the second suggestion to explore"),
 					Idea(body: "This is the third suggestion to explore")]
 	}
+	
+	func noIdeasSelected() -> Bool {
+		return newIdeas.filter { $0.added }.count == 0
+	}
+	
+	var ideasSelectedText: String {
+		return newIdeas.filter({ $0.added }).count == 1 ? "Add idea" : "Add ideas"
+	}
 }

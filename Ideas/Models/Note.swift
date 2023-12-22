@@ -28,7 +28,7 @@ struct Note: Identifiable {
 	}
 }
 
-struct Idea {
+struct Idea: Equatable {
 	var body: String
 	var added = false
 }
