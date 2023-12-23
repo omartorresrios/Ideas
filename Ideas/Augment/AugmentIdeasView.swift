@@ -20,7 +20,8 @@ struct AugmentIdeasView: View {
 			ScrollView(.vertical, showsIndicators: false) {
 				VStack(spacing: 15) {
 					ForEach(viewModel.newIdeas.indices, id: \.self) { index in
-						IdeaItemView(idea: $viewModel.newIdeas[index], isLast: viewModel.newIdeas.last == viewModel.newIdeas[index])
+						IdeaItemView(idea: $viewModel.newIdeas[index],
+									 isLast: viewModel.newIdeas.last == viewModel.newIdeas[index])
 					}
 				}
 				.padding()
@@ -45,6 +46,7 @@ struct AugmentIdeasView: View {
 		}
 		.buttonStyle(.borderedProminent)
 		.controlSize(.large)
+		.padding([.leading, .trailing])
 		.disabled(viewModel.noIdeasSelected())
 	}
 }

@@ -21,12 +21,12 @@ struct TopicsView: View {
 			if viewModel.reachLimitOf5Topics() {
 				Text("A note can't have more than 5 topics.")
 			}
-			ScrollView(.vertical, showsIndicators: false) {
+			ScrollView(showsIndicators: false) {
 				VStack(spacing: 15) {
 					ForEach(viewModel.chatGPTTopics.indices, id: \.self) { index in
 						ChatGPTTopicItemView(topic: $viewModel.chatGPTTopics[index],
-										 isLast: viewModel.chatGPTTopics.last == viewModel.chatGPTTopics[index],
-										 disabledAddedButton: disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
+											 isLast: viewModel.chatGPTTopics.last == viewModel.chatGPTTopics[index],
+											 disabledAddedButton: disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
 					}
 				}
 				.padding()
@@ -57,6 +57,7 @@ struct TopicsView: View {
 		}
 		.buttonStyle(.borderedProminent)
 		.controlSize(.large)
+		.padding([.leading, .trailing])
 		.disabled(viewModel.reachLimitOf5Topics() || viewModel.noTopicsSelected())
 	}
 }
