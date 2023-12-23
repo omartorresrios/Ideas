@@ -23,6 +23,18 @@ struct RelatedNoteView: View {
 							.frame(width: 40, height: 40)
 						Text(note.user.name)
 						Spacer()
+						Button(
+							action: {
+//								presentationMode.wrappedValue.dismiss()
+							},
+							label: {
+								Text("Connect")
+									.padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
+									.background(.gray)
+									.foregroundStyle(.white)
+									.clipShape(RoundedRectangle(cornerRadius: 20))
+							}
+						)
 					}
 					.padding([.leading, .trailing])
 					

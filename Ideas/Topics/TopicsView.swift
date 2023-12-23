@@ -20,6 +20,7 @@ struct TopicsView: View {
 				.background(Color.yellow)
 			if viewModel.reachLimitOf5Topics() {
 				Text("A note can't have more than 5 topics.")
+					.padding()
 			}
 			ScrollView(showsIndicators: false) {
 				VStack(spacing: 15) {
