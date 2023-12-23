@@ -16,7 +16,10 @@ class TopicsViewModel: ObservableObject {
 						 ChatGPTTopic(name: "Random topic 3", added: false),
 						 ChatGPTTopic(name: "Random topic 4", added: false),
 						 ChatGPTTopic(name: "Random topic 5", added: false),
-						 ChatGPTTopic(name: "Random topic 6", added: false)]
+						 ChatGPTTopic(name: "Random topic 6", added: false),
+						 ChatGPTTopic(name: "Random topic 7", added: false),
+						 ChatGPTTopic(name: "Random topic 8", added: false),
+						 ChatGPTTopic(name: "Random topic 9", added: false)]
 	}
 	
 	func getTopics(currentTopics: [Topic]) {
@@ -28,6 +31,14 @@ class TopicsViewModel: ObservableObject {
 	}
 	
 	func reachLimitOf5Topics() -> Bool {
-		return chatGPTTopics.filter({ $0.added }).count == 5
+		chatGPTTopics.filter({ $0.added }).count == 5
+	}
+	
+	func noTopicsSelected() -> Bool {
+		chatGPTTopics.filter { $0.added }.count == 0
+	}
+	
+	var topicsSelectedText: String {
+		return chatGPTTopics.filter({ $0.added }).count == 1 ? "Add topic" : "Add topics"
 	}
 }

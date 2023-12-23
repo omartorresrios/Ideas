@@ -7,36 +7,6 @@
 
 import SwiftUI
 
-struct IdeaItem: View {
-	@Binding var idea: Idea
-	private var isLast = false
-
-	init(idea: Binding<Idea>, isLast: Bool) {
-		self._idea = idea
-		self.isLast = isLast
-	}
-
-	var body: some View {
-		HStack(spacing: 2) {
-			Text(idea.body)
-				.foregroundStyle(.white)
-			Spacer()
-			Button {
-				idea.added.toggle()
-			} label: {
-				idea.added ? Image(systemName: "minus.circle").renderingMode(.template)
-					.foregroundColor(.white) : Image(systemName: "plus.circle").renderingMode(.template)
-					.foregroundColor(.white)
-			}
-		}
-		if !isLast {
-			Divider()
-				.overlay(.white)
-				.frame(maxWidth: 100)
-		}
-	}
-}
-
 struct AugmentIdeasView: View {
 	@Binding var note: Note
 	@StateObject var viewModel = AugmentIdeasViewModel()
@@ -47,11 +17,10 @@ struct AugmentIdeasView: View {
 		VStack(spacing: 0) {
 			Text("Explore new ideas")
 				.padding()
-//				.background(Color.yellow)
 			ScrollView(.vertical, showsIndicators: false) {
 				VStack(spacing: 15) {
 					ForEach(viewModel.newIdeas.indices, id: \.self) { index in
-						IdeaItem(idea: $viewModel.newIdeas[index], isLast: viewModel.newIdeas.last == viewModel.newIdeas[index])
+						IdeaItemView(idea: $viewModel.newIdeas[index], isLast: viewModel.newIdeas.last == viewModel.newIdeas[index])
 					}
 				}
 				.padding()
@@ -59,7 +28,6 @@ struct AugmentIdeasView: View {
 				.cornerRadius(8)
 			}
 			.padding([.leading, .trailing])
-//			.background(Color.blue)
 			Spacer()
 			addButton
 		}
@@ -77,7 +45,6 @@ struct AugmentIdeasView: View {
 		}
 		.buttonStyle(.borderedProminent)
 		.controlSize(.large)
-		.padding()
 		.disabled(viewModel.noIdeasSelected())
 	}
 }

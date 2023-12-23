@@ -14,27 +14,28 @@ struct TopicsView: View {
 	@Environment(\.presentationMode) var presentationMode
 	
 	var body: some View {
-		VStack {
+		VStack(spacing: 0) {
 			Text("Related topics")
 				.padding()
+				.background(Color.yellow)
 			if viewModel.reachLimitOf5Topics() {
 				Text("A note can't have more than 5 topics.")
 			}
-			List {
-				ForEach(viewModel.chatGPTTopics.indices, id: \.self) { index in
-					HStack {
-						Text(viewModel.chatGPTTopics[index].name)
-						Spacer()
-						Button {
-							viewModel.chatGPTTopics[index].added.toggle()
-						} label: {
-							viewModel.chatGPTTopics[index].added ? Image(systemName: "minus.circle") : Image(systemName: "plus.circle")
-						}
-						.disabled(disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
+			ScrollView(.vertical, showsIndicators: false) {
+				VStack(spacing: 15) {
+					ForEach(viewModel.chatGPTTopics.indices, id: \.self) { index in
+						ChatGPTTopicItemView(topic: $viewModel.chatGPTTopics[index],
+										 isLast: viewModel.chatGPTTopics.last == viewModel.chatGPTTopics[index],
+										 disabledAddedButton: disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
 					}
 				}
+				.padding()
+				.background(Color.gray)
+				.cornerRadius(8)
 			}
-			doneButton
+			.padding([.leading, .trailing])
+			Spacer()
+			addButton
 		}
 		.onAppear {
 			viewModel.getTopics(currentTopics: note.topics)
@@ -45,14 +46,18 @@ struct TopicsView: View {
 		return viewModel.reachLimitOf5Topics() && !chatGPTTopic.added
 	}
 	
-	var doneButton: some View {
-		Button("Done") {
+	var addButton: some View {
+		Button {
 			let newTopics = viewModel.chatGPTTopics.filter { $0.added }.map { Topic(id: UUID().uuidString, name: $0.name) }
 			note.topics.append(contentsOf: newTopics)
 			presentationMode.wrappedValue.dismiss()
+		} label: {
+			Text(viewModel.topicsSelectedText)
+				.frame(maxWidth: .infinity)
 		}
 		.buttonStyle(.borderedProminent)
-		.disabled(viewModel.reachLimitOf5Topics())
+		.controlSize(.large)
+		.disabled(viewModel.reachLimitOf5Topics() || viewModel.noTopicsSelected())
 	}
 }
 

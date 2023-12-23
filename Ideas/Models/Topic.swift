@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatGPTTopic {
+struct ChatGPTTopic: Equatable {
 	let name: String
 	var added: Bool
 }

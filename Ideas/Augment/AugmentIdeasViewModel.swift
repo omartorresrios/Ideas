@@ -13,11 +13,17 @@ class AugmentIdeasViewModel: ObservableObject {
 	init() {
 		newIdeas = [Idea(body: "This is the first suggestion to explore for example this is a large idea of more than 1 line"),
 					Idea(body: "This is the second suggestion to explore"),
-					Idea(body: "This is the third suggestion to explore")]
+					Idea(body: "This is the third suggestion to explore1"),
+					Idea(body: "This is the third suggestion to explore2"),
+					Idea(body: "This is the third suggestion to explore3"),
+					Idea(body: "This is the third suggestion to explore4"),
+					Idea(body: "This is the third suggestion to explore5"),
+					Idea(body: "This is the third suggestion to explore6"),
+					Idea(body: "This is the third suggestion to explore7")]
 	}
 	
 	func noIdeasSelected() -> Bool {
-		return newIdeas.filter { $0.added }.count == 0
+		newIdeas.filter { $0.added }.count == 0
 	}
 	
 	var ideasSelectedText: String {

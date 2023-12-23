@@ -191,7 +191,6 @@ struct NoteView: View {
 				presentingTopicsView = false
 			}
 			.presentationDetents([.fraction(0.60)])
-			.interactiveDismissDisabled()
 		}
 	}
 	
