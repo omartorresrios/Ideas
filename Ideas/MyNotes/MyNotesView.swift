@@ -16,16 +16,22 @@ struct MyNotesView: View {
 			if viewModel.notes.isEmpty {
 				Text("No notes found. Create one!")
 			} else {
-				noteList
+				contentView
 			}
-			newNote
 		}
 		.onAppear {
 			UITextView.appearance().textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
 		}
 	}
 	
-	var noteList: some View {
+	var contentView: some View {
+		ZStack(alignment: .bottomTrailing) {
+			notesList
+			newNote
+		}
+	}
+	
+	var notesList: some View {
 		List {
 			ForEach($viewModel.notes) { $note in
 				ZStack(alignment: .leading) {
@@ -35,7 +41,6 @@ struct MyNotesView: View {
 								print("Note \(note.id)-\(note.body) needs to be updated")// hit here some api service endpoint to update the particular note. This will run in the background, so the user won't be affected from keep interacting witht the app).
 							}
 						}
-						.toolbarRole(.editor)
 					} label: {
 						EmptyView()
 					}
@@ -62,15 +67,18 @@ struct MyNotesView: View {
 					viewModel.addNewNote(note)
 				}
 			}
-			.toolbarRole(.editor)
 		} label: {
 			Image(systemName: "square.and.pencil")
 				.resizable()
 				.scaledToFit()
 				.frame(width: 20, height: 20)
-		}.simultaneousGesture(TapGesture().onEnded {
-			UINavigationBar.setAnimationsEnabled(false)
-		})
+				.font(.title.weight(.semibold))
+				.padding()
+				.background(Color.pink)
+				.foregroundColor(.white)
+				.clipShape(Circle())
+		}
+		.padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
 	}
 }
 
