@@ -21,20 +21,18 @@ struct ChatGPTTopicItemView: View {
 	var body: some View {
 		HStack(spacing: 2) {
 			Text(topic.name)
-				.foregroundStyle(.white)
 			Spacer()
 			Button {
 				topic.added.toggle()
 			} label: {
 				topic.added ? Image(systemName: "minus.circle").renderingMode(.template)
-					.foregroundColor(.white) : Image(systemName: "plus.circle").renderingMode(.template)
-					.foregroundColor(.white)
+					.foregroundColor(.black) : Image(systemName: "plus.circle").renderingMode(.template)
+					.foregroundColor(.black)
 			}
 			.disabled(disabledAddedButton)
 		}
 		if !isLast {
 			Divider()
-				.overlay(.white)
 		}
 	}
 }

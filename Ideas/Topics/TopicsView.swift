@@ -16,28 +16,35 @@ struct TopicsView: View {
 	var body: some View {
 		VStack(spacing: 0) {
 			Text("Related topics")
+				.font(Font.body.weight(.semibold))
 				.padding()
-				.background(Color.yellow)
-			if viewModel.reachLimitOf5Topics() {
-				Text("A note can't have more than 5 topics.")
-					.padding()
-			}
-			ScrollView(showsIndicators: false) {
-				VStack(spacing: 15) {
-					ForEach(viewModel.chatGPTTopics.indices, id: \.self) { index in
-						ChatGPTTopicItemView(topic: $viewModel.chatGPTTopics[index],
-											 isLast: viewModel.chatGPTTopics.last == viewModel.chatGPTTopics[index],
-											 disabledAddedButton: disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
-					}
+			VStack(spacing: 10) {
+				if viewModel.reachLimitOf5Topics() {
+					Text("A note can't have more than 5 topics.")
+						.foregroundStyle(.red)
+						.frame(maxWidth: .infinity)
+						.padding()
+						.background(.white)
+						.cornerRadius(8)
 				}
-				.padding()
-				.background(Color.gray)
-				.cornerRadius(8)
+				ScrollView(showsIndicators: false) {
+					VStack(spacing: 15) {
+						ForEach(viewModel.chatGPTTopics.indices, id: \.self) { index in
+							ChatGPTTopicItemView(topic: $viewModel.chatGPTTopics[index],
+												 isLast: viewModel.chatGPTTopics.last == viewModel.chatGPTTopics[index],
+												 disabledAddedButton: disableAddTopicButton(for: viewModel.chatGPTTopics[index]))
+						}
+					}
+					.padding()
+					.background(.white)
+					.cornerRadius(8)
+				}
 			}
 			.padding([.leading, .trailing])
 			Spacer()
 			addButton
 		}
+		.background(Color(UIColor.systemGray6))
 		.onAppear {
 			viewModel.getTopics(currentTopics: note.topics)
 		}
