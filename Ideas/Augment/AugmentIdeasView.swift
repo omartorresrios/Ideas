@@ -16,6 +16,7 @@ struct AugmentIdeasView: View {
     var body: some View {
 		VStack(spacing: 0) {
 			Text("Explore new ideas")
+				.font(Font.body.weight(.semibold))
 				.padding()
 			ScrollView(.vertical, showsIndicators: false) {
 				VStack(spacing: 15) {
@@ -25,13 +26,14 @@ struct AugmentIdeasView: View {
 					}
 				}
 				.padding()
-				.background(Color.gray)
+				.background(.white)
 				.cornerRadius(8)
 			}
 			.padding([.leading, .trailing])
 			Spacer()
 			addButton
 		}
+		.background(Color(UIColor.systemGray6))
     }
 	
 	var addButton: some View {

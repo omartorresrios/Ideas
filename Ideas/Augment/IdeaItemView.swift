@@ -19,19 +19,17 @@ struct IdeaItemView: View {
 	var body: some View {
 		HStack(spacing: 2) {
 			Text(idea.body)
-				.foregroundStyle(.white)
 			Spacer()
 			Button {
 				idea.added.toggle()
 			} label: {
 				idea.added ? Image(systemName: "minus.circle").renderingMode(.template)
-					.foregroundColor(.white) : Image(systemName: "plus.circle").renderingMode(.template)
-					.foregroundColor(.white)
+					.foregroundColor(.black) : Image(systemName: "plus.circle").renderingMode(.template)
+					.foregroundColor(.black)
 			}
 		}
 		if !isLast {
 			Divider()
-				.overlay(.white)
 		}
 	}
 }
