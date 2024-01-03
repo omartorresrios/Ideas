@@ -111,8 +111,9 @@ struct NoteView: View {
 					selectedTopic = topic.name
 				} label: {
 					Text(topic.name)
-						.padding(10)
-						.background(.gray)
+						.padding(EdgeInsets(top: 6, leading: 18, bottom: 6, trailing: 18))
+						.foregroundColor(.black)
+						.background((presentingRelatedNotesView && selectedTopic == topic.name) ? .yellow : Color(UIColor.systemGray6))
 						.foregroundStyle(.white)
 						.clipShape(Capsule())
 				}
@@ -219,7 +220,12 @@ struct NoteView: View {
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		NoteView(note: .constant(Note(id: "1", title: "title", body: "body", topics: [], ideas: [])),
+		NoteView(note: .constant(Note(id: "1",
+									  title: "title",
+									  body: "body",
+									  topics: [Topic(id: "1", name: "Topic1"),
+											   Topic(id: "2", name: "Topic2")],
+									  ideas: [])),
 				 originalBody: "", completion: { _, _ in })
 	}
 }
