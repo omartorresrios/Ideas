@@ -33,7 +33,11 @@ struct Idea: Equatable {
 	var added = false
 }
 
-struct RelatedNote: Identifiable {
+struct RelatedNote: Identifiable, Equatable {
+	static func == (lhs: RelatedNote, rhs: RelatedNote) -> Bool {
+		lhs.id == rhs.id
+	}
+	
 	let id: String
 	let title: String
 	let body: String

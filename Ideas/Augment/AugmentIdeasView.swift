@@ -18,8 +18,8 @@ struct AugmentIdeasView: View {
 			Text("Explore new ideas")
 				.font(Font.body.weight(.semibold))
 				.padding()
-			ScrollView(.vertical, showsIndicators: false) {
-				VStack(spacing: 15) {
+			ScrollView(showsIndicators: false) {
+				LazyVStack(spacing: 15) {
 					ForEach(viewModel.newIdeas.indices, id: \.self) { index in
 						IdeaItemView(idea: $viewModel.newIdeas[index],
 									 isLast: viewModel.newIdeas.last == viewModel.newIdeas[index])

@@ -28,7 +28,7 @@ struct TopicsView: View {
 						.cornerRadius(8)
 				}
 				ScrollView(showsIndicators: false) {
-					VStack(spacing: 15) {
+					LazyVStack(spacing: 15) {
 						ForEach(viewModel.chatGPTTopics.indices, id: \.self) { index in
 							ChatGPTTopicItemView(topic: $viewModel.chatGPTTopics[index],
 												 isLast: viewModel.chatGPTTopics.last == viewModel.chatGPTTopics[index],

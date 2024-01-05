@@ -13,7 +13,7 @@ class RelatedNotesViewModel: ObservableObject {
 	init() {
 		relatedNotes = [RelatedNote(id: UUID().uuidString,
 									title: "This is my note regarding the thoughts",
-									body: "Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet.Something I have not thought thourhg yet. And this is the end",
+									body: "Something I have not thought through yet, but will definetly at some point in the future since this is so much related to my research outcomes that it will be a bit dissapointed to not have it included in my notes by the end of the year.",
 									topics: [],
 									user: User(name: "Omar Torres")),
 						RelatedNote(id: UUID().uuidString,
@@ -38,8 +38,19 @@ struct RelatedNotesView: View {
 			VStack(spacing: 0) {
 				Text("Related notes on **\(topicName)**")
 					.padding()
-				relatedNotes
+				ScrollView(showsIndicators: false) {
+					LazyVStack(spacing: 15) {
+						ForEach(viewModel.relatedNotes.indices, id: \.self) { index in
+							RelatedNoteItemView(note: viewModel.relatedNotes[index], isLast: viewModel.relatedNotes.last == viewModel.relatedNotes[index])
+						}
+					}
+					.padding()
+					.background(.white)
+					.cornerRadius(8)
+				}
+				.padding([.leading, .trailing])
 			}
+			.background(Color(UIColor.systemGray6))
 		}
     }
 	
