@@ -41,7 +41,8 @@ struct RelatedNotesView: View {
 				ScrollView(showsIndicators: false) {
 					LazyVStack(spacing: 15) {
 						ForEach(viewModel.relatedNotes.indices, id: \.self) { index in
-							RelatedNoteItemView(note: viewModel.relatedNotes[index], isLast: viewModel.relatedNotes.last == viewModel.relatedNotes[index])
+							RelatedNoteItemView(note: viewModel.relatedNotes[index],
+												isLast: viewModel.relatedNotes.last == viewModel.relatedNotes[index])
 						}
 					}
 					.padding()

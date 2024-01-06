@@ -36,7 +36,7 @@ struct TopicsView: View {
 						}
 					}
 					.padding()
-					.background(Color(UIColor.systemGray6))
+					.background(.white)
 					.cornerRadius(8)
 				}
 			}
@@ -44,7 +44,7 @@ struct TopicsView: View {
 			Spacer()
 			addButton
 		}
-		.background(.white)
+		.background(Color(UIColor.systemGray6))
 		.onAppear {
 			viewModel.getTopics(currentTopics: note.topics)
 		}
