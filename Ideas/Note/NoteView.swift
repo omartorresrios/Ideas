@@ -29,42 +29,10 @@ struct NoteView: View {
 		navigationBarBackButton
 		GeometryReader { geometry in
 			ScrollView {
-				topics
 				VStack(spacing: 0) {
-					TextField("Title", text: $note.title, axis: .vertical)
-						.onChange(of: note.title) { newValue in
-							if newValue.last == "\n" {
-								note.title = newValue.components(separatedBy: CharacterSet.newlines).filter { !$0.isEmpty }.joined(separator: "\n")
-								bodyFocused = true
-								enableBodyEditing = true
-							}
-						}
-						.onChange(of: titleFocused) { newValue in
-							handleIdeasToExploreView(with: newValue)
-						}
-						.font(Font.title3.weight(.semibold))
-						.submitLabel(.return)
-						.focused($titleFocused)
-						.padding([.leading, .trailing, .top])
-						
-					TextEditor(text: $note.body)
-						.disabled(!enableBodyEditing)
-						.focused($bodyFocused)
-						.scrollContentBackground(.hidden)
-						.onChange(of: bodyFocused) { newValue in
-							handleIdeasToExploreView(with: newValue)
-						}
-					if showIdeasToExplore {
-						Text(note.ideasToExplore())
-							.lineLimit(nil)
-							.frame(maxWidth: .infinity, alignment: .leading)
-							.padding()
-							.foregroundColor(.white)
-							.background(.gray)
-							.transition(.move(edge: .trailing))
-					}
+					topics
+					editor(geometry: geometry)
 				}
-				.frame(height: geometry.size.height)
 			}
 			.onAppear {
 				setInitialValues()
@@ -126,11 +94,50 @@ struct NoteView: View {
 		}
 	}
 	
+	func editor(geometry: GeometryProxy) -> some View {
+		VStack(spacing: 0) {
+			TextField("Title", text: $note.title, axis: .vertical)
+				.onChange(of: note.title) { newValue in
+					if newValue.last == "\n" {
+						note.title = newValue.components(separatedBy: CharacterSet.newlines).filter { !$0.isEmpty }.joined(separator: "\n")
+						bodyFocused = true
+						enableBodyEditing = true
+					}
+				}
+				.onChange(of: titleFocused) { newValue in
+					handleIdeasToExploreView(with: newValue)
+				}
+				.font(Font.title3.weight(.semibold))
+				.submitLabel(.return)
+				.focused($titleFocused)
+				.padding([.leading, .trailing, .top])
+			
+			TextEditor(text: $note.body)
+				.disabled(!enableBodyEditing)
+				.focused($bodyFocused)
+				.scrollContentBackground(.hidden)
+				.onChange(of: bodyFocused) { newValue in
+					handleIdeasToExploreView(with: newValue)
+				}
+			if showIdeasToExplore {
+				Text(note.ideasToExplore())
+					.lineLimit(nil)
+					.frame(maxWidth: .infinity, alignment: .leading)
+					.padding()
+					.foregroundColor(.white)
+					.background(.gray)
+					.transition(.move(edge: .trailing))
+			}
+		}
+		.frame(height: geometry.size.height)
+	}
+	
 	var augmentButton: some View {
 		Button {
 			presentingAugmentView = true
 		} label: {
 			Text("Augment")
+				.font(.headline)
 		}
 		.sheet(isPresented: $presentingAugmentView) {
 			AugmentIdeasView(note: $note) {
@@ -178,7 +185,7 @@ struct NoteView: View {
 //				}
 //			}
 		} label: {
-			Text(note.topics.isEmpty ? "Add topics" : "Add more topics")
+			Text("+ Topics")
 				.font(.headline)
 //							.foregroundColor(.white)
 //							.padding()
